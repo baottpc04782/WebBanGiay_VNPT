@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="ISO-8859-1">
+<title>Manufactor</title>
+<link rel="stylesheet" href="/assets/css/styles.min.css" type="text/css" />
+	<link rel="stylesheet" href="/assets/css/main.css">
+	<link rel="stylesheet" href="/assets/fonts/all.css">
+</head>
+<body>
+<div class="page-wrapper" id="main-wrapper" data-layout="vertical" data-navbarbg="skin6" data-sidebartype="full"
+		data-sidebar-position="fixed" data-header-position="fixed">
+		<!-- Sidebar Start -->
+		<header th:replace="~{/layout1/admin/menu.html::asidebar-admin}"></header>
+		<!--  Sidebar End -->
+		<!--  Main wrapper -->
+		<div class="body-wrapper">
+			<!--  Header Start -->
+			<header th:replace="~{/layout1/admin/header.html::navbar-admin}"></header>
+			<!--  Header End -->
+			<div class="container-fluid">
+				<div class="card">
+					<div class="card-body bg-info">
+						<h5 class="card-title fw-semibold mb-4">ManufacTor</h5>
+						<div class="card">
+							<div class="card-body ">
+								<form method="post" th:object="${manufactor}" onsubmit="return validateForm();">
+									<div class="mb-3 d-none">
+										<label for="exampleInputEmail1" class="form-label d-none">ID
+											Manufactor: </label>
+										<input type="text" th:field="*{manufactorId}" class="form-control" />
+									</div>
+									<div class="mb-3">
+										<label for="exampleInputPassword1" class="form-label">
+											Manufactor name: </label>
+										<input type="text" th:field="*{name}" class="form-control" required="required" />
+										<div id="error-message" class="alert alert-danger"
+											th:if="${#fields.hasErrors('name')}" th:errors="*{name}"
+											style="margin-top:10px ;"></div>
+									</div>
+									<div class="d-flex justify-content-end">
+										<button <button type="submit" formaction="/admin/savemanufactor"
+											class="btn btn-primary me-2 " id="submitButton">Create</button>
+										<button type="submit" formaction="/admin/savemanufactor"
+											class="btn btn-primary me-2 d-none" id="updateButton">Update</button>
+										<a type="submit" href="javascript:void(0);"s
+											onclick="return confirm('Bạn có chắc muốn xóa không?');"
+											th:href="'/admin/deleteManufactor/' + *{manufactorId}"
+											class="btn btn-danger me-2">Delete</a>
+										<a href="/admin/manufactor" class="btn btn-primary" style="color: white;">Clear</a>
+									</div>
+								</form>
+							</div>
+						</div>
+
+						<!-- Form tìm kiếm -->
+						<div class="container">
+							<div class="row mb-3">
+								<h5 class="col-6 card-title fw-semibold my-auto">Manufactor table</h5>
+								<div class="col-6 head-search-form ">
+									<form action="/admin/searchManufactor" method="get">
+										<div class="input-group">
+											<input type="text" class="form-control position-relative"
+												placeholder="Search" name="keyword" th:value="${keywords}" style="background-color: white;"  />
+											<button class="btn btn-outline-secondary" type="submit" style="background-color: white;" >
+												<i class="ti ti-search search-icon-form"></i>
+											</button>
+										</div>
+									</form>
+								</div>
+							</div>
+
+							<!-- phân trang -->
+							<div th:if="${pages != null}">
+								<div th:if="${not # lists.isEmpty(pages.content)}">
+
+									<div class="col-lg-12 d-flex align-items-stretch">
+										<div class="card w-100">
+											<div class="card-body p-4">
+												<h5 class="card-title fw-semibold mb-4">Recent Information</h5>
+												<div class="table-responsive">
+													<table class="table text-nowrap mb-0 align-middle">
+														<thead class="text-dark fs-4">
+															<tr>
+																<th class="border-bottom-0">
+																	<h6 class="fw-semibold mb-0">ID Manufactor</h6>
+																</th>
+																<th class="border-bottom-0">
+																	<h6 class="fw-semibold mb-0">Manufactor Name</h6>
+																</th>
+																<th class="border-bottom-0">
+																	<h6 class="fw-semibold mb-0">Delete</h6>
+																</th>
+																<th class="border-bottom-0">
+																	<h6 class="fw-semibold mb-0">Edit</h6>
+																</th>
+															</tr>
+														</thead>
+														<tbody>
+
+															<tr th:each="manufactor : ${pages.content}">
+																<td class="border-bottom-0" th:text="${manufactor.manufactorId}">
+
+																</td>
+																<td class="border-bottom-0" th:text="${manufactor.name}">
+
+																	</h6>
+																</td>
+																<td class="border-bottom-0"><a
+																		href="javascript:void(0);"
+																		th:onclick="'return confirmDelete(\'' + ${manufactor.manufactorId} + '\')'"><i
+																			class="fa-solid fa-trash text-danger"></i></a>
+																</td>
+
+																<td class="border-bottom-0">
+																	<a
+																		th:href="@{/admin/editManufactor/{manufactorId}(manufactorId=${manufactor.manufactorId})}+'?showUpdate=true'"><i
+																			class="fa-solid fa-pencil text-warning"></i></a>
+																</td>
+															</tr>
+
+														</tbody>
+													</table>
+
+
+
+													<!-- Pagination -->
+													<nav aria-label="Page navigation"
+														style="margin-top:15px;margin-bottom: -15px; margin-left: -10px; font-weight: bold;">
+														<ul class="pagination justify-content-center">
+															<li th:each="number : ${#numbers.sequence(1, pages.totalPages)}"
+																th:class="${currentPage==number-1 ? 'page-item active' : 'page-item'}">
+																<a class="page-link"
+																	th:href="@{/admin/manufactor?p={num}(num=${number-1})}"
+																	th:text="${number}"></a>
+															</li>
+														</ul>
+													</nav>
+													<!-- End Pagination -->
+
+												</div>
+												<div th:if="${#lists.isEmpty(pages.content)}">
+													<!-- Nếu không có dữ liệu, hiển thị thông báo -->
+													<h2>No data available!</h2>
+												</div>
+
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<script>
+		const editButtons = document.querySelectorAll('.edit-button');
+		const updateButton = document.getElementById('updateButton');
+		const submitButton = document.getElementById('submitButton');
+
+		// Lấy tham số từ URL
+		const urlParams = new URLSearchParams(window.location.search);
+		const showUpdate = urlParams.get("showUpdate");
+
+		// Kiểm tra giá trị tham số và hiển thị nút "Update" nếu cần thiết
+		if (showUpdate === "true") {
+			// Hiển thị nút "Update" và ẩn nút "Submit"
+			updateButton.classList.remove('d-none');
+			submitButton.classList.add('d-none');
+		} else {
+			// Ẩn nút "Update" và hiển thị nút "Submit" mặc định
+			updateButton.classList.add('d-none');
+			submitButton.classList.remove('d-none');
+		}
+
+		editButtons.forEach((button) => {
+			button.addEventListener('click', function () {
+				// Ẩn nút "Submit" và hiển thị nút "Update"
+				submitButton.classList.add('d-none');
+				updateButton.classList.remove('d-none');
+			});
+		});
+
+		updateButton.addEventListener('click', function (event) {
+			// Ẩn nút "Update" và hiển thị nút "Submit"
+			updateButton.classList.add('d-none');
+			submitButton.classList.remove('d-none');
+		});
+		//thông báo xóa
+		function confirmDelete(deleteUrl) {
+			var result = confirm("Bạn có chắc muốn xóa không?");
+			if (result) {
+				// Nếu người dùng đồng ý xóa, thực hiện chuyển đường dẫn
+				window.location.href = deleteUrl;
+			}
+		}
+		function confirmDelete(manufactorId) {
+				if (confirm("Bạn có chắc muốn xóa không?")) {
+					window.location.href = '/admin/deleteManufactor/' + manufactorId;
+				}
+				return false;
+			}
+			</script>
+
+	<script src="/assets/libs/jquery/dist/jquery.min.js"></script>
+	<script src="/assets/libs/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+	<script src="/assets/js/sidebarmenu.js"></script>
+	<script src="/assets/js/app.min.js"></script>
+	<script src="/assets/libs/simplebar/dist/simplebar.js"></script>
+</body>
+</html>

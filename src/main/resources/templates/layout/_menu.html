@@ -1,0 +1,50 @@
+<div class="container">
+    <a class="navbar-brand" href="/home">Minishop</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#ftco-nav" aria-controls="ftco-nav"
+        aria-expanded="false" aria-label="Toggle navigation">
+        <span class="oi oi-menu"></span> Menu
+    </button>
+
+    <div class="collapse navbar-collapse" id="ftco-nav">
+        <ul class="navbar-nav ml-auto">
+            <li class="nav-item"><a href="/home" class="nav-link">Home</a></li>
+
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="dropdown04" data-toggle="dropdown" aria-haspopup="true"
+                    aria-expanded="false">Catalog</a>
+                <div class="dropdown-menu" aria-labelledby="dropdown04">
+                    <th:block th:if="${#request.remoteUser}">
+                        <a class="dropdown-item" href="/changepass">Change Password</a>
+                        <a class="dropdown-item" href="/forgotpass">Forgot Password</a>
+                        <a class="dropdown-item" href="/editProfile">Edit Profile</a>
+                        <a class="dropdown-item" href="/order/list">Your Orders</a>
+                        <a class="dropdown-item" href="/order/checkout">Checkout</a>
+                        <a class="dropdown-item" href="/logoff">Logout</a>
+                        <a th:if="${#request.isUserInRole('DIRE') or #request.isUserInRole('STAF')}" 
+                            class="dropdown-item" href="/admin">Administration</a>
+                    </th:block>
+
+                    <th:block th:unless="${#request.remoteUser}">
+                        <a class="dropdown-item" href="/login">Login</a>
+                        <a class="dropdown-item" href="/register">Register</a>
+                    </th:block>
+            
+                    
+
+                </div>
+
+            </li>
+            <li class="nav-item"><a href="/allproduct" class="nav-link">Shop</a></li>
+            <li class="nav-item"><a href="/about" class="nav-link">About</a></li>
+            <li class="nav-item cta cta-colored"><a href="/cart/view" class="nav-link">
+                <span class="icon-shopping_cart"></span>[{{cart.count}}]</a></li>
+                
+            <ul th:if="${#request.remoteUser}" class="navbar-nav ml-auto">
+                <li style="padding-top: 10px; padding-left: 10px;" class="nav-item">
+                    <span>[[${#request.remoteUser}]]</span>
+                </li>
+            </ul>
+
+        </ul>
+    </div>
+</div>

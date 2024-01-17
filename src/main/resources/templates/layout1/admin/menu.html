@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Document</title>
+</head>
+
+<body>
+	<aside class="left-sidebar" th:fragment="asidebar-admin">
+		<!-- Sidebar scroll-->
+		<div>
+			<div class="brand-logo d-flex align-items-center justify-content-between bg-warning">
+				<a th:href="@{/admin/index}" class="text-nowrap logo-img "> <img
+						th:src="@{/assets/images/logos/logo.jpg}" width="100%">
+				</a>
+				<div class="close-btn d-xl-none d-block sidebartoggler cursor-pointer" id="sidebarCollapse">
+					<i class="ti ti-x fs-8"></i>
+				</div>
+			</div>
+			<!-- Sidebar navigation-->
+			<nav class="sidebar-nav  scroll-sidebar bg-warning" data-simplebar="">
+				<ul id="sidebarnav">
+					
+					
+					<li class="sidebar-item"><a class="sidebar-link" th:href="@{/admin/index}" aria-expanded="false">
+							<span> <i class="ti ti-layout-dashboard"></i>
+							</span> <span class="hide-menu">Statistical</span>
+						</a></li>
+					
+							
+							<li class="sidebar-item"><a class="sidebar-link" th:href="@{/admin/account}" aria-expanded="false">
+							<span> <i class="ti ti-user"></i>
+							</span> <span class="hide-menu">Account</span>
+						</a></li>
+					<li class="sidebar-item"><a class="sidebar-link" th:href="@{/admin/product}" aria-expanded="false">
+							<span> <i class="ti ti-brand-producthunt"></i>
+							</span> <span class="hide-menu">Product</span>
+						</a></li>
+					<li class="sidebar-item"><a class="sidebar-link category-link" th:href="@{/admin/category}"> <span>
+								<i class="ti ti-article"></i>
+							</span> <span class="hide-menu">Category</span>
+						</a></li>
+					<li class="sidebar-item"><a class="sidebar-link" th:href="@{/admin/color}" aria-expanded="false">
+							<span>
+								<i class="ti ti-color-filter"></i>
+							</span> <span class="hide-menu">Color</span>
+						</a></li>
+					<li class="sidebar-item"><a class="sidebar-link" th:href="@{/admin/size}" aria-expanded="false">
+							<span>
+								<i class="ti ti-brand-medium"></i>
+							</span> <span class="hide-menu">Size</span>
+<!--
+					<li class="sidebar-item"><a class="sidebar-link" th:href="@{/admin/role}" aria-expanded="false">
+							<span> <i class="ti ti-user"></i>
+							</span> <span class="hide-menu">Role</span>
+						</a></li>-->
+					<li class="sidebar-item"><a class="sidebar-link" th:href="@{/admin/discount}" aria-expanded="false">
+							<span> <i class="ti ti-discount"></i>
+							</span> <span class="hide-menu">Discount</span>
+						</a></li>
+					<li class="sidebar-item"><a class="sidebar-link" th:href="@{/admin/manufactor}" aria-expanded="false">
+							<span> <i class="ti ti-user"></i>
+							</span> <span class="hide-menu">Manufactor</span>
+						</a></li>
+					<li class="sidebar-item"><a class="sidebar-link" th:href="@{/admin/order}" aria-expanded="false">
+							<span> <i class="ti ti-file-invoice"></i>
+							</span> <span class="hide-menu">Order</span>
+						</a></li>
+					</a></li>
+					
+					<li class="sidebar-item"><a class="sidebar-link"
+							href="/home"> <span> <i
+									class="ti ti-login"></i>
+							</span> <span class="hide-menu">Exit</span>
+						</a></li>
+				</ul>
+			</nav>
+			<!-- End Sidebar navigation -->
+		</div>
+		<!-- End Sidebar scroll-->
+	</aside>
+	<!--  Sidebar End -->
+</body>
+
+</html>

@@ -1,0 +1,175 @@
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1" name="viewport">
+    <title>Product Management</title>
+    <link href="/assets/css/styles.min.css" rel="stylesheet"/>
+    <link href="/assets/fonts/all.css" rel="stylesheet">
+</head>
+
+<body>
+<div class="page-wrapper" data-header-position="fixed" data-layout="vertical" data-navbarbg="skin6"
+     data-sidebar-position="fixed"
+     data-sidebartype="full" id="main-wrapper">
+    <!-- Sidebar Start -->
+    <header th:replace="~{/layout1/admin/menu.html::asidebar-admin}"></header>
+    <!--  Sidebar End -->
+    <!--  Main wrapper -->
+    <div class="body-wrapper">
+        <!--  Header Start -->
+        <header th:replace="~{/layout1/admin/header.html::navbar-admin}"></header>
+        <!--  Header End -->
+        <div class="container-fluid">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title fw-semibold mb-4">Product Management</h5>
+                    <div class="card">
+                        <div class="card-body">
+                            <form th:object="${productDetail}">
+                                <div class="row">
+                                    <div class="col-lg-6">
+                                        <div class="mb-3 d-none">
+                                            <label class="form-label">ID Product: </label>
+                                            <input class="form-control" th:field="*{pdDetailId}" type="text"/>
+                                            <input class="form-control" hidden="hidden" name="productIdH" th:value="${productIdH}" type="text"/>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label class="form-label">Quantity: </label>
+                                            <input class="form-control" th:field="*{quantity}" type="number" required="required" />
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="col-lg-6">
+                                        <div class="mb-3">
+                                            <label class="form-label">Color: </label>
+                                            <select class="form-select form-select-md" th:field="*{color.colorId}">
+                                                <option th:each="x: ${colorList}" th:value="${x.colorId}" 
+                                                	th:text="${x.name}" th:selected="${productDetail.color.colorId == x.colorId}">
+                                                </option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+
+								<div class="row">
+                                    <div class="col-lg-6">
+                                        <div class="mb-3">
+                                            <label class="form-label">Size: </label>
+                                            <select class="form-select form-select-md" th:field="*{size.sizeId}">
+                                                <option th:each="x: ${sizeList}" th:value="${x.sizeId}"
+                                                		th:text="${x.name}" th:selected="${productDetail.size.sizeId == x.sizeId}">
+                                                    [(${x.name})]
+                                                </option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <button class="btn btn-primary me-3" formaction="/admin/saveProductDetail" formmethod="post"
+                                        id="submitButton">Submit
+                                </button>
+                                <button class="btn btn-primary me-3 d-none" formaction="/admin/saveProductDetail" formmethod="post"
+                                        id="updateButton">Update
+                                </button>
+                                <a class="btn btn-danger me-3"
+                                   onclick="return confirm('Bạn có chắc muốn xóa không?');" th:href="'/admin/deleteProductDetail?id=' + ${productDetail.pdDetailId} + '&productIdH=' + ${productIdH}">Delete</a>
+                                <a class="btn btn-primary me-3" href="/admin/productDetail">Clear</a>
+                            </form>
+                        </div>
+                    </div>
+                    <div class="col-lg-12 d-flex align-items-stretch">
+                        <div class="card w-100">
+                            <div class="card-body p-4">
+                                <h5 class="card-title fw-semibold mb-4">Recent Information
+                                </h5>
+                                <div class="table-responsive">
+                                    <table class="table text-nowrap mb-0 align-middle">
+                                        <thead class="text-dark fs-4">
+                                        <tr>
+                                            <th class="border-bottom-0">
+                                                <h6 class="fw-semibold mb-0">Id</h6>
+                                            </th>
+                                            <th class="border-bottom-0">
+                                                <h6 class="fw-semibold mb-0">Quantity</h6>
+                                            </th>
+                                            <th class="border-bottom-0">
+                                                <h6 class="fw-semibold mb-0">Color</h6>
+                                            </th>
+                                            <th class="border-bottom-0">
+                                                <h6 class="fw-semibold mb-0">Size</h6>
+                                            </th>
+                                            <th class="border-bottom-0">
+                                                <h6 class="fw-semibold mb-0">Action</h6>
+                                            </th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        <th:block th:each="x: ${list}">
+                                            <tr>
+                                                <td class="border-bottom-0">
+                                                    <h6 class="fw-semibold mb-0">[(${x.pdDetailId})]</h6>
+                                                </td>
+                                                <td class="border-bottom-0">
+                                                    <h6 class="fw-semibold mb-1">[(${x.quantity})]</h6>
+                                                </td>
+                                                <td class="border-bottom-0">
+                                                    <h6 class="fw-normal mb-1">[(${x.color.name})]</h6>
+                                                </td>
+                                                <td class="border-bottom-0">
+                                                    <h6 class="fw-normal mb-0">[(${x.size.name})]</h6>
+                                                </td>
+                                                <td class="border-bottom-0 ">
+                                                    <a class="btn btn-outline-danger"
+                                                       onclick="return confirm('Bạn có chắc muốn xóa không?');"
+                                                       th:href="'/admin/deleteProductDetail?id=' + ${x.pdDetailId} + '&productIdH=' + ${productIdH}">
+                                                        <i class="fa-solid fa-trash"></i>&nbsp; Delete
+                                                    </a>
+                                                    <a class="btn btn-outline-warning"
+                                                       th:href="'/admin/productDetail?id='+${x.pdDetailId}+'&productId=' + ${productIdH}">
+                                                        <i class="fa-solid fa-pencil"></i>&nbsp; Edit
+                                                    </a>
+                                                </td>
+                                            </tr>
+                                        </th:block>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--  Body Wrapper -->
+<script>
+    const editButtons = document.querySelectorAll('.edit-button');
+    const updateButton = document.getElementById('updateButton');
+    const submitButton = document.getElementById('submitButton');
+
+    // Lấy tham số từ URL
+    const urlParams = new URLSearchParams(window.location.search);
+    const showUpdate = urlParams.get("showUpdate");
+
+    // Kiểm tra giá trị tham số và hiển thị nút "Update" nếu cần thiết
+    if (showUpdate === "true") {
+        // Hiển thị nút "Update" và ẩn nút "Submit"
+        updateButton.classList.remove('d-none');
+        submitButton.classList.add('d-none');
+    } else {
+        // Ẩn nút "Update" và hiển thị nút "Submit" mặc định
+        updateButton.classList.add('d-none');
+        submitButton.classList.remove('d-none');
+    }
+
+</script>
+<script src="/assets/libs/jquery/dist/jquery.min.js"></script>
+<script src="/assets/libs/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+<script src="/assets/js/sidebarmenu.js"></script>
+<script src="/assets/js/app.min.js"></script>
+<script src="/assets/libs/simplebar/dist/simplebar.js"></script>
+</body>
+
+</html>

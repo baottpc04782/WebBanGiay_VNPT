@@ -1,0 +1,248 @@
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Category Management</title>
+	<link rel="shortcut icon" type="image/png" href="/assets/images/logos/logo-icon.png" />
+	<link rel="stylesheet" href="/assets/css/styles.min.css" type="text/css" />
+	<link rel="stylesheet" href="/assets/fonts/all.css">
+</head>
+
+<body>
+	<div class="page-wrapper" id="main-wrapper" data-layout="vertical" data-navbarbg="skin6" data-sidebartype="full"
+		data-sidebar-position="fixed" data-header-position="fixed">
+		<!-- Sidebar Start -->
+		<header th:replace="~{/layout1/admin/menu.html::asidebar-admin}"></header>
+		<!--  Sidebar End -->
+		<!--  Main wrapper -->
+		<div class="body-wrapper">
+			<!--  Header Start -->
+			<header th:replace="~{/layout1/admin/header.html::navbar-admin}"></header>
+			<!--  Header End -->
+			<div class="container-fluid">
+				<div class="card">
+					<div class="card-body bg-info">
+						<h5 class="card-title fw-semibold mb-4">Category management</h5>
+						<div class="card">
+							<div class="card-body">
+								<form method="post" th:object="${category}" onsubmit="return validateForm();">
+									<div class="mb-3">
+										<label for="exampleInputEmail1" class="form-label d-none">ID
+											Category</label>
+										<input type="hidden" class="form-control" th:field="*{categoryId}" />
+									</div>
+									<div class="mb-3">
+										<label for="exampleInputPassword1" class="form-label">Name
+											Category: </label>
+										<input type="text" class="form-control" th:field="*{name}" required="required"/>
+
+										<div id="error-message" class="alert alert-danger"
+											th:if="${#fields.hasErrors('name')}" th:errors="*{name}"
+											style="margin-top:10px ;"></div>
+
+
+								  </div>
+									<div class="d-flex justify-content-end">
+									<button type="submit" class="btn btn-primary me-2 " id="submitButton"
+										formaction="/admin/savecategory">Create</button>
+
+									<button type="submit" formaction="/admin/savecategory"
+										class="btn btn-primary me-2 d-none" id="updateButton">Update</button>
+
+									<a class="btn btn-danger me-3"
+										onclick="return confirm('Bạn có chắc muốn xóa không?');"
+										th:href="'/admin/delete/' + *{categoryId}">Delete</a>
+									<a href="/admin/category" class="btn btn-primary" style="color: white;">Clear</a>
+								  </div>
+								</form>
+							</div>
+						</div>
+						<!-- Form tìm kiếm -->
+						<div class="container">
+							<div class="row mb-3">
+								<h5 class="col-6 card-title fw-semibold my-auto">Category table</h5>
+								<div class="col-6 head-search-form">
+									<form action="/admin/searchCate" method="get">
+										<div class="input-group">
+											<input type="text" class="form-control position-relative"
+												placeholder="Search" name="keyword" th:value="${keywords}" style="background-color: white;" />
+											<button class="btn btn-outline-secondary" type="submit" style="background-color: white;">
+												<i class="ti ti-search search-icon-form"></i>
+											</button>
+										</div>
+									</form>
+								</div>
+							</div>
+							<!-- phân trang -->
+							<div th:if="${pages != null}">
+								<div th:if="${not #lists.isEmpty(pages.content)}">
+									<div class="col-lg-12 d-flex align-items-stretch">
+										<div class="card w-100">
+											<div class="card-body p-4">
+												<h5 class="card-title fw-semibold mb-4">Recent Information</h5>
+												<div class="table-responsive">
+													<table class="table text-nowrap mb-0 align-middle">
+														<thead class="text-dark fs-4">
+															<tr>
+																<th class="border-bottom-0">
+																	<h6 class="fw-semibold mb-0">ID Category</h6>
+																</th>
+																<th class="border-bottom-0">
+																	<h6 class="fw-semibold mb-0">Name Category</h6>
+																</th>
+																<th class="border-bottom-0">
+																	<h6 class="fw-semibold mb-0">Delete</h6>
+																</th>
+																<th class="border-bottom-0">
+																	<h6 class="fw-semibold mb-0">Edit</h6>
+																</th>
+															</tr>
+														</thead>
+
+														<tbody>
+															<!-- <c:choose>
+													<c:when test="${categorykw != null}">
+														<c:forEach var="item" items="${categorykw}"> -->
+															<tr th:each="category : ${pages.content}">
+																<td class="border-bottom-0"
+																	th:text="${category.categoryId}">
+																	<!-- <h6 class="fw-semibold mb-0">${item.ID}</h6> -->
+																</td>
+																<td class="border-bottom-0" th:text="${category.name}">
+																	<!-- <h6 class="fw-semibold mb-1">${item.catogoryname} -->
+																	</h6>
+																</td>
+
+																<td class="border-bottom-0"><a
+																		href="javascript:void(0);"
+																		th:onclick="'return confirmDelete(\'' + ${category.categoryId} + '\')'"><i
+																			class="fa-solid fa-trash text-danger"></i></a>
+																</td>
+																<td class="border-bottom-0">
+
+																	<a th:href="@{/admin/edit/{categoryId}(categoryId=${category.categoryId})}+'?showUpdate=true'"
+																		class="fa-solid fa-pencil text-warning"></i>
+																	</a>
+																</td>
+
+															</tr>
+
+															<!-- </c:forEach>
+													</c:when> -->
+															<!-- <c:otherwise>
+														<c:forEach var="item" items="${categories}" begin="0" end="4">
+															<tr>
+																<td class="border-bottom-0">
+																	<h6 class="fw-semibold mb-0">${item.ID}</h6>
+																</td>
+																<td class="border-bottom-0">
+																	<h6 class="fw-semibold mb-1">${item.catogoryname}
+																	</h6>
+																</td>
+																<td class="border-bottom-0"><a
+																		href="javascript:void(0);"
+																		onclick="confirmDelete('/admin/delete/${item.ID}');"><i
+																			class="fa-solid fa-trash text-danger "></i></a>
+																</td>
+																<td class="border-bottom-0"><a
+																		href="/admin/edit/${item.ID}?showUpdate=true"><i
+																			class="fa-solid fa-pencil text-warning edit-button"></i></a>
+																</td>
+															</tr>
+														</c:forEach>
+													</c:otherwise> -->
+															<!-- </c:choose> -->
+														</tbody>
+													</table>
+
+													<!-- Pagination -->
+													<nav aria-label="Page navigation"
+														style="margin-top:15px;margin-bottom: -15px; margin-left: -10px; font-weight: bold;">
+														<ul class="pagination justify-content-center">
+															<li th:each="number : ${#numbers.sequence(1, pages.totalPages)}"
+																th:class="${currentPage==number-1 ? 'page-item active' : 'page-item'}">
+																<a class="page-link"
+																	th:href="@{/admin/category?p={num}(num=${number-1})}"
+																	th:text="${number}"></a>
+															</li>
+														</ul>
+													</nav>
+													<!-- End Pagination -->
+
+
+												</div>
+												<div th:if="${#lists.isEmpty(pages.content)}">
+													<!-- Nếu không có dữ liệu, hiển thị thông báo -->
+													<h2>No data available!</h2>
+												</div>
+
+
+
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<script>
+			const editButtons = document.querySelectorAll('.edit-button');
+			const updateButton = document.getElementById('updateButton');
+			const submitButton = document.getElementById('submitButton');
+
+			// Lấy tham số từ URL
+			const urlParams = new URLSearchParams(window.location.search);
+			const showUpdate = urlParams.get("showUpdate");
+
+			// Kiểm tra giá trị tham số và hiển thị nút "Update" nếu cần thiết
+			if (showUpdate === "true") {
+				// Hiển thị nút "Update" và ẩn nút "Submit"
+				updateButton.classList.remove('d-none');
+				submitButton.classList.add('d-none');
+			} else {
+				// Ẩn nút "Update" và hiển thị nút "Submit" mặc định
+				updateButton.classList.add('d-none');
+				submitButton.classList.remove('d-none');
+			}
+
+			editButtons.forEach((button) => {
+				button.addEventListener('click', function () {
+					// Ẩn nút "Submit" và hiển thị nút "Update"
+					submitButton.classList.add('d-none');
+					updateButton.classList.remove('d-none');
+				});
+			});
+
+			updateButton.addEventListener('click', function (event) {
+				// Ẩn nút "Update" và hiển thị nút "Submit"
+				updateButton.classList.add('d-none');
+				submitButton.classList.remove('d-none');
+			});
+			//thông báo xóa
+			function confirmDelete(deleteUrl) {
+				var result = confirm("Bạn có chắc muốn xóa không?");
+				if (result) {
+					// Nếu người dùng đồng ý xóa, thực hiện chuyển đường dẫn
+					window.location.href = deleteUrl;
+				}
+			}
+				function confirmDelete(categoryId) {
+			if (confirm("Bạn có chắc muốn xóa không?")) {
+				window.location.href = '/admin/delete/' + categoryId;
+			}
+			return false;
+		}
+		</script>
+
+		<script src="/assets/libs/jquery/dist/jquery.min.js"></script>
+		<script src="/assets/libs/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+		<script src="/assets/js/sidebarmenu.js"></script>
+		<script src="/assets/js/app.min.js"></script>
+		<script src="/assets/libs/simplebar/dist/simplebar.js"></script>
+</body>
+
+</html>

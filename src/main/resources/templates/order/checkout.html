@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html xmlns:th="http://thymeleaf.org" th:replace="~{/layout/index :: dynamic(~{::main})}">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .form-control {}
+    </style>
+</head>
+
+<body>
+    <main>
+        <div class="hero-wrap hero-bread" style="background-image: url('../images/bg_6.jpg');">
+            <div class="container">
+                <div class="row no-gutters slider-text align-items-center justify-content-center">
+                    <div class="col-md-9 ftco-animate text-center">
+                        <p class="breadcrumbs"><span class="mr-2"><a href="/home">Home</a></span>
+                            <span>Checkout</span>
+                        </p>
+                        <h1 class="mb-0 bread">Checkout</h1>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <section class="ftco-section">
+            <!-- <div th:replace="~{/cart/view :: shopping_cart}"></div> -->
+            <div class="container">
+                <div class="row justify-content-center">
+                    <div class="col-xl-12 ftco-animate">
+                        <form action="#" class="billing-form">
+                            <h3 class="mb-4 billing-heading" style="text-align: center;">Billing Details</h3>
+                            <div class="row align-items-end">
+                                <div class="col-md-12">
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label for="firstname">Purchaser:</label>
+                                                <div style="font-size: large; font-weight: bold; padding-top: .7em;"
+                                                    class="form-control" id="username">[[${#request.remoteUser}]]</div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label for="emailaddress">Order Date:</label>
+                                                <div style="font-size: large; font-weight: bold; padding-top: .7em;"
+                                                    class="form-control">{{order.createDate | date: 'dd-MM-yyyy'}}
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <label for="streetaddress">Shipping Address</label>
+                                                <input type="text" class="form-control"
+                                                    placeholder="House number and street name" ng-model="order.address">
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                        </form><!-- END -->
+
+                    </div>
+                </div>
+
+            </div>
+            <div class="row justify-content-start">
+                <div class="col col-lg-5 col-md-6 mt-5 cart-wrap ftco-animate">
+                    <div class="cart-total mb-3">
+                        <h3>Cart Totals</h3>
+                        <p class="d-flex">
+                            <span>Subtotal</span>
+                            <span>${{cart.amount}}</span>
+                        </p>
+                        <p class="d-flex">
+                            <span>Discount</span>
+                            <span>${{discount}}</span>
+                            <input type="text" hidden="hidden" id="discountHi" ng-model="discount">
+                        </p>
+                        <hr>
+                        <p class="d-flex total-price">
+                            <span>Total</span>
+                            <span>${{cart.totalCart}}</span>
+                        </p>
+                    </div>
+                    <p class="text-center">
+                        <a ng-click="order.purchase()" href="" class="btn btn-primary py-3 px-4">
+                            Purchase
+                        </a>
+                    </p>
+                </div>
+            </div>
+        </section> <!-- .section -->
+
+
+    </main>
+</body>
+
+</html>

@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Java6 Project</title>
+
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css"
+		integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+	<style type="text/css">
+		input[type=password] {
+			border-right-color: #FFFFFF
+		}
+
+		.input-group-text {
+			background-color: #FFFFFF;
+			border-left-color: #FFFFFF;
+			cursor: pointer;
+		}
+
+		.background-example {
+			width: auto;
+			height: auto;
+			background-image: url('/image/nen_login.png');
+			background-size: cover;
+			background-position: center;
+		}
+	</style>
+</head>
+
+<body class="background-example">
+	<section class="h-100 gradient-form">
+		<div class="container py-5 h-100">
+			<div class="row d-flex justify-content-center align-items-center h-100">
+				<div class="col-xl-10">
+					<div class="card rounded-3 text-black">
+						<div class="row g-0">
+							<div class="col-lg-12">
+								<div class="card-body p-md-5 mx-md-4">
+
+									<div class="text-center">
+										<img src="/image/logo_login.jfif" style="width: 185px;" alt="logo">
+										<h4 class="mt-1 mb-5 pb-1">WELCOME</h4>
+									</div>
+
+									<form th:action="@{/login}" method="post">
+										<div class="form-outline mb-4">
+											<input type="text" id="username" name="username" class="form-control"
+												placeholder="Username" required />
+										</div>
+
+										<div class="form-outline mb-4">
+											<div class="input-group" id="show_hide_password">
+												<input type="password" id="password" name="password"
+													class="form-control" placeholder="Password"
+													style="border-right-color:#FFFFFF" required />
+												<div class="input-group-append">
+													<span class="input-group-text"><i class="fa fa-eye"></i></span>
+												</div>
+											</div>
+										</div>
+										<h6 style="color: red;font-style: italic;">[[${message}]]</h6>
+										<div class="text-center pt-1 mb-5 pb-1">
+											<button class="btn btn-primary btn-block fa-lg gradient-custom-2 mb-3"
+												type="submit">Log in</button>
+											<a class="text-muted" th:href="@{/forgotpass}">Forgot password?</a>
+										</div>
+
+										<div class="d-flex align-items-center justify-content-center pb-4">
+											<p class="mb-0 me-2">Don't have an account?</p>
+											<a th:href="@{/register}" class="btn btn-outline-danger"
+												style="margin-left: 5px;">Create new</a>
+										</div>
+									</form>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+	<script type="text/javascript" src="/js/login.js"></script>
+</body>
+
+</html>

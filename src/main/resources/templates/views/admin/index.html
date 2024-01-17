@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<!--<link rel="shortcut icon" href="/assets/images/logos/logoicon.png" type="image/png"/>-->
+	<title> Shop Management</title>
+	<link rel="stylesheet" href="/assets/css/styles.min.css" type="text/css" />
+	<link rel="stylesheet" href="/assets/css/main.css">
+	<link rel="stylesheet" href="/assets/scss/styles.scss">
+</head>
+
+<body>
+	<!--  Body Wrapper -->
+	<div class="page-wrapper" id="main-wrapper" data-layout="vertical" data-navbarbg="skin6" data-sidebartype="full"
+		data-sidebar-position="fixed" data-header-position="fixed">
+		<!-- Sidebar Start -->
+		<header th:replace="~{/layout1/admin/menu::asidebar-admin}"></header>
+		<!--  Main wrapper -->
+		<div class="body-wrapper">
+			<!--  Header Start -->
+			<header th:replace="~{/layout1/admin/header::navbar-admin}"></header>
+			<!--  Header End -->
+			<div class="container-fluid">
+				<!--  Row 1 -->
+				<div class="row ">
+					<div class="col-lg-12 d-flex align-items-strech">
+						<div class="card w-100">
+							<div class="card-body">
+								<div class="d-sm-flex d-block align-items-center justify-content-between mb-9">
+									<div class="mb-3 mb-sm-0">
+										<h5 class="card-title fw-semibold">Statistical By Day</h5>
+									</div>
+									<form action="/admin/index" method="get">
+										<div>
+											<input class="form-control" type="date" id="dateDay" name="dateDay" th:value="${#dates.format(dateDay, 'yyyy-MM-dd')}" />
+											<button class="btn btn-outline-secondary" type="submit">Seach day</button>
+										</div>
+									</form>
+								</div>
+
+							</div>
+						</div>
+					</div>
+					<div class="col-lg-12">
+						<div class="row ">
+							<div class="col-lg-6">
+								<!-- Yearly Breakup -->
+								<div class="card overflow-hidden bg-info " >
+									<div class="card-body p-4">
+										<h5 class="card-title mb-9 fw-semibold"></h5>
+										<div class="row align-items-center">
+											<div class="col-8">
+												<div class="d-flex align-items-center mb-3">
+													<h3 class="fw-semibold mb-3">Tổng đơn hàng</h3>
+												</div>
+												<h4 class="fw-semibold mb-3">[[${countDtDay}]]</h4>
+											</div>
+
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="col-lg-6">
+								<!-- Yearly Breakup -->
+								<div class="card overflow-hidden bg-info " >
+									<div class="card-body p-4">
+										<h5 class="card-title mb-9 fw-semibold"></h5>
+										<div class="row align-items-center">
+											<div class="col-8">
+												<div class="d-flex align-items-center mb-3">
+													<h3 class="fw-semibold mb-3">Tổng doanh thu</h3>
+												</div>	
+												<h4 class="fw-semibold mb-3">[[${countTDay}]]</h4>
+											</div>
+
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="row ">
+					<div class="col-lg-12 d-flex align-items-strech">
+						<div class="card w-100">
+							<div class="card-body">
+								<div class="d-sm-flex d-block align-items-center justify-content-between mb-9">
+									<div class="mb-3 mb-sm-0">
+										<h5 class="card-title fw-semibold">Statistical By Month</h5>
+									</div>
+									<form action="/admin/index" method="get">
+										<div>
+											<input class="form-control" type="month" id="dateMonth" name="dateMonth" th:value="${dateMonth}" />
+											<button class="btn btn-outline-secondary" type="submit">Seach Month</button>
+										</div>
+									</form>
+								</div>
+
+							</div>
+						</div>
+					</div>
+					<div class="col-lg-12">
+						<div class="row ">
+							<div class="col-lg-6">
+								<!-- Yearly Breakup -->
+								<div class="card overflow-hidden bg-info " >
+									<div class="card-body p-4">
+										<h5 class="card-title mb-9 fw-semibold"></h5>
+										<div class="row align-items-center">
+											<div class="col-8">
+												<div class="d-flex align-items-center mb-3">
+													<h3 class="fw-semibold mb-3">Tổng đơn hàng</h3>
+												</div>
+												<h4 class="fw-semibold mb-3">[[${countDtMonth}]]</h4>
+											</div>
+
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="col-lg-6">
+								<!-- Yearly Breakup -->
+								<div class="card overflow-hidden bg-info " >
+									<div class="card-body p-4">
+										<h5 class="card-title mb-9 fw-semibold"></h5>
+										<div class="row align-items-center">
+											<div class="col-8">
+												<div class="d-flex align-items-center mb-3">
+													<h3 class="fw-semibold mb-3">Tổng doanh thu</h3>
+												</div>	
+												<h4 class="fw-semibold mb-3">[[${countTMonth}]]</h4>
+											</div>
+
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="row ">
+					<div class="col-lg-12 d-flex align-items-strech">
+						<div class="card w-100">
+							<div class="card-body">
+								<div class="d-sm-flex d-block align-items-center justify-content-between mb-9">
+									<div class="mb-3 mb-sm-0">
+										<h5 class="card-title fw-semibold">Statistical By Year</h5>
+									</div>
+									<form action="/admin/index" method="get">
+										<div>
+											<input class="form-control" type="text" id="dateYear" name="dateYear" th:value="${dateYear}" required="required" />
+											<button class="btn btn-outline-secondary" type="submit">Seach Year</button>
+										</div>
+									</form>
+								</div>
+
+							</div>
+						</div>
+					</div>
+					<div class="col-lg-12">
+						<div class="row ">
+							<div class="col-lg-6">
+								<!-- Yearly Breakup -->
+								<div class="card overflow-hidden bg-info " >
+									<div class="card-body p-4">
+										<h5 class="card-title mb-9 fw-semibold"></h5>
+										<div class="row align-items-center">
+											<div class="col-8">
+												<div class="d-flex align-items-center mb-3">
+													<h3 class="fw-semibold mb-3">Tổng đơn hàng</h3>
+												</div>
+												<h4 class="fw-semibold mb-3">[[${countDtYear}]]</h4>
+											</div>
+
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="col-lg-6">
+								<!-- Yearly Breakup -->
+								<div class="card overflow-hidden bg-info " >
+									<div class="card-body p-4">
+										<h5 class="card-title mb-9 fw-semibold"></h5>
+										<div class="row align-items-center">
+											<div class="col-8">
+												<div class="d-flex align-items-center mb-3">
+													<h3 class="fw-semibold mb-3">Tổng doanh thu</h3>
+												</div>	
+												<h4 class="fw-semibold mb-3">[[${countTYear}]]</h4>
+											</div>
+
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+				<script src="../assets/libs/jquery/dist/jquery.min.js"></script>
+				<script src="../assets/libs/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+				<script src="../assets/js/sidebarmenu.js"></script>
+				<script src="../assets/js/app.min.js"></script>
+				<script src="../assets/libs/apexcharts/dist/apexcharts.min.js"></script>
+				<script src="../assets/libs/simplebar/dist/simplebar.js"></script>
+				<script src="../assets/js/dashboard.js"></script>
+				<script src="../assets/js/main.js"></script>
+</body>
+
+</html>
